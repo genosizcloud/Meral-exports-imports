@@ -1,0 +1,21 @@
+{
+    "name": "Meral Exports",
+    "short_name": "Meral",
+    "description": "Premium food exports from Kerala, India.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0E382B",
+    "icons": [
+        {
+            "src": "/primary-logo.png",
+            "sizes": "any",
+            "type": "image/png"
+        },
+        {
+            "src": "/secondary-logo.png",
+            "sizes": "any",
+            "type": "image/png"
+        }
+    ]
+}

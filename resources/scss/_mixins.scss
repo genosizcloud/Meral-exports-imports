@@ -1,0 +1,121 @@
+// ============================================================
+//  MERAL EXPORTS — Mixins & Functions
+// ============================================================
+@use 'variables' as *;
+
+// ── Flex helpers ──
+@mixin flex($align: center, $justify: flex-start, $gap: 0) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  @if $gap != 0 { gap: $gap; }
+}
+
+@mixin flex-center { @include flex(center, center); }
+
+// ── Responsive breakpoints ──
+$breakpoints: (xs: 480px, sm: 640px, md: 768px, lg: 1024px, xl: 1280px);
+
+@mixin below($bp) {
+  @media (max-width: map-get($breakpoints, $bp)) { @content; }
+}
+@mixin above($bp) {
+  @media (min-width: map-get($breakpoints, $bp)) { @content; }
+}
+
+// ── Glass morphism ──
+@mixin glass($bg: 0.1, $blur: 20px, $border: 0.2) {
+  background: rgba($white, $bg);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba($white, $border);
+}
+
+// ── Gradient text ──
+@mixin gradient-text($from: $navy, $to: #1C4E3D) {
+  background: linear-gradient(135deg, $from, $to);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ── Animation shorthand ──
+@mixin animate($name, $duration: 0.6s, $timing: $ease-out-expo, $delay: 0s, $fill: both) {
+  animation: $name $duration $timing $delay $fill;
+}
+
+// ── Keyframe builder ──
+@mixin keyframes($name) {
+  @keyframes #{$name} { @content; }
+}
+
+// ── Hover lift ──
+@mixin hover-lift($y: -6px, $shadow: $shadow-hover) {
+  transition: transform $t-med $ease-out-expo, box-shadow $t-med ease;
+  &:hover {
+    transform: translateY($y);
+    box-shadow: $shadow;
+  }
+}
+
+// ── Gold shimmer sweep ──
+@mixin shimmer-sweep($delay: 0s, $duration: 3s) {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 55%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba($white, 0.3), transparent);
+    transform: skewX(-20deg);
+    animation: shimmerSweep $duration ease-in-out $delay infinite;
+  }
+}
+
+// ── Stagger nth-child loop ──
+@mixin stagger-children($count: 8, $base-delay: 0s, $step: 0.1s) {
+  @for $i from 1 through $count {
+    &:nth-child(#{$i}) {
+      transition-delay: $base-delay + ($i - 1) * $step;
+    }
+  }
+}
+
+// ── Section header defaults ──
+@mixin section-label {
+  display: inline-block;
+  background: transparent;
+  color: $gold;
+  border: 1px solid rgba($gold, 0.4);
+  padding: 0.3rem 1.1rem;
+  border-radius: $radius-sm;
+  font-size: 0.72rem;
+  font-weight: $weight-bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+// ── Pseudo overlay ──
+@mixin overlay($color: $navy, $opacity: 0.5) {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba($color, $opacity);
+    @content;
+  }
+}
+
+// ── Truncate text ──
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

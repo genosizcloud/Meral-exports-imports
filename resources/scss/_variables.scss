@@ -1,0 +1,68 @@
+// ============================================================
+//  MERAL EXPORTS — Design Tokens
+// ============================================================
+
+// ── Brand colours (mirrors logo palette) ──
+$navy:        #0E382B;
+$navy-dark:   #08241B;
+$navy-mid:    #1C4E3D;
+$navy-light:  #E7EEE9;
+$cream:       #FAF8F5;
+$cream-dark:  #EAE5DC;
+$gold:        #9C7428;
+$gold-light:  #fdf6e3;
+$gold-bright: #DFBE7E;
+$white:       #ffffff;
+$black:       #000000;
+
+$text-dark:   $navy;
+$text-gray:   #5A6863;
+$text-light:  rgba($white, 0.7);
+
+// ── Typography ──
+$font-main:   'Oswald', sans-serif;
+$weight-reg:  400;
+$weight-med:  500;
+$weight-semi: 600;
+$weight-bold: 700;
+$weight-black:800;
+
+// ── Spacing ──
+$section-pad:    5.5rem;
+$container-max:  1320px;
+$radius-sm:      6px;
+$radius-md:      10px;
+$radius-lg:      16px;
+$radius-xl:      24px;
+
+// ── Shadows ──
+$shadow-soft:    0 2px 16px rgba($navy, 0.07);
+$shadow-card:    0 4px 24px rgba($navy, 0.09);
+$shadow-hover:   0 20px 48px rgba($navy, 0.14);
+$shadow-gold:    0 0 24px rgba($gold, 0.35);
+
+// ── Animation timing ──
+$ease-out-expo:  cubic-bezier(0.22, 1, 0.36, 1);
+$ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+$ease-smooth:    cubic-bezier(0.4,  0,   0.2,  1);
+$t-fast:  0.18s;
+$t-med:   0.35s;
+$t-slow:  0.65s;
+$t-xslow: 0.9s;
+
+// ── Category palette map ──
+$categories: (
+  rice:    (#F5EEDA, #DFBE7E),
+  frozen:  (#E8F0EB, #C6D8CC),
+  pulses:  (#F5EEDA, #E8D7B4),
+  snacks:  (#F7F0E2, #E8D7B4),
+  grocery: (#E7EEE9, #C6D8CC),
+  fish:    (#E8F0EB, #C6D8CC)
+);
+
+// ── Z-index scale ──
+$z-preloader: 99999;
+$z-cursor:    99998;
+$z-progress:  9999;
+$z-navbar:    1000;
+$z-modal:     500;

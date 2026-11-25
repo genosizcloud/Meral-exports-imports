@@ -1,0 +1,297 @@
+@use 'variables'  as *;
+@use 'mixins'     as *;
+@use 'animations';
+@use 'components';
+
+// ============================================================
+//  MERAL EXPORTS — Main SCSS Entry
+//  Compile with:  npm run dev  (or npm run build)
+// ============================================================
+
+// ── Core resets ──────────────────────────────────────────────
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ── Google / Bunny fonts ──────────────────────────────────────
+// (loaded via <link> in blade template)
+
+// ── Base body ────────────────────────────────────────────────
+body {
+  font-family: $font-main;
+  color: $text-dark;
+  background: #fff;
+  overflow-x: hidden;
+  cursor: none; // hidden in favour of custom cursor
+
+  @media (hover: none) { cursor: auto; }
+}
+
+// ── Selection colour ─────────────────────────────────────────
+::selection {
+  background: rgba($gold, 0.25);
+  color: $navy;
+}
+
+// ── Particle ─────────────────────────────────────────────────
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba($gold, 0.4);
+  animation: particleRise linear infinite;
+}
+
+// ── Split word wrapper ───────────────────────────────────────
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: 1.15;
+
+  span { display: inline-block; }
+}
+
+// ── Scroll progress ──────────────────────────────────────────
+// (defined in _components, referenced here for clarity)
+
+// ── Tab filter ───────────────────────────────────────────────
+.products-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.tab-btn {
+  padding: 0.5rem 1.3rem;
+  border-radius: $radius-sm;
+  border: 1.5px solid #D5CEC2;
+  background: #fff;
+  font-size: 0.82rem;
+  font-weight: $weight-semi;
+  cursor: pointer;
+  transition: background $t-fast ease, border-color $t-fast ease, color $t-fast ease;
+  color: $text-gray;
+  letter-spacing: 0.2px;
+  position: relative;
+  overflow: hidden;
+
+  &.active,
+  &:hover { background: $navy; border-color: $navy; color: $white; }
+
+  // ripple
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba($white, 0.3);
+    transform: scale(0);
+    animation: rippleEffect 0.5s linear;
+    pointer-events: none;
+  }
+}
+
+// ── Product list section ─────────────────────────────────────
+#product-list { background: #F7F5F0; }
+
+.product-img {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.2rem;
+}
+
+.product-info {
+  padding: 1.1rem;
+  border-top: 1px solid rgba($navy, 0.05);
+
+  h4 {
+    font-size: 0.875rem;
+    font-weight: $weight-bold;
+    color: $navy;
+    margin-bottom: 0.3rem;
+  }
+
+  p {
+    font-size: 0.775rem;
+    color: $text-gray;
+    line-height: 1.55;
+  }
+}
+
+.product-badge {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.18rem 0.65rem;
+  border-radius: 3px;
+  font-size: 0.68rem;
+  font-weight: $weight-bold;
+  letter-spacing: 0.3px;
+}
+
+// ── Hamburger ────────────────────────────────────────────────
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+
+  span {
+    width: 24px; height: 2px;
+    background: $text-dark;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+}
+
+// ── Mobile nav ───────────────────────────────────────────────
+.mobile-nav {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba($black, 0.5);
+  backdrop-filter: blur(4px);
+
+  &.open { display: flex; align-items: flex-start; justify-content: flex-end; }
+
+  &-panel {
+    background: $cream;
+    width: 280px;
+    height: 100vh;
+    padding: 5rem 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    box-shadow: -10px 0 50px rgba($navy, 0.2);
+
+    a {
+      display: block;
+      padding: 0.75rem 1rem;
+      border-radius: $radius-sm;
+      color: $navy;
+      text-decoration: none;
+      font-weight: $weight-med;
+      font-size: 1rem;
+      transition: background $t-fast ease;
+
+      &:hover { background: $navy-light; }
+    }
+  }
+}
+
+// ── Contact items ────────────────────────────────────────────
+.contact {
+  &-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+
+    &-icon {
+      width: 44px; height: 44px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      background: $white;
+      border: 1px solid rgba($navy, 0.1);
+      box-shadow: 0 2px 8px rgba($navy, 0.06);
+      @include flex-center;
+      font-size: 1.15rem;
+    }
+
+    &-text {
+      h4 {
+        font-size: 0.9rem;
+        font-weight: $weight-semi;
+        color: $text-dark;
+        margin-bottom: 0.2rem;
+      }
+
+      p, a {
+        font-size: 0.875rem;
+        color: $text-gray;
+        text-decoration: none;
+      }
+
+      a {
+        position: relative;
+        display: inline-block;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -1px; left: 0;
+          width: 0; height: 1px;
+          background: $navy;
+          transition: width $t-med ease;
+        }
+
+        &:hover { color: $navy; &::after { width: 100%; } }
+      }
+    }
+  }
+
+  &-items { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  &-info {
+    h2 {
+      font-size: 2rem;
+      font-weight: $weight-bold;
+      color: $navy;
+      margin-bottom: 1rem;
+      letter-spacing: -0.3px;
+    }
+    p {
+      color: $text-gray;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+// ── Section-specific overrides ───────────────────────────────
+#products { background: $cream; }
+
+#why-us {
+  .section-label { border-color: rgba($gold, 0.5); color: $gold; }
+  .section-title { color: $white; }
+  .section-subtitle { color: rgba($white, 0.65); }
+  .section-title-line { .section-header.visible & { width: 48px; } }
+}
+
+// ── Mag button ───────────────────────────────────────────────
+.mag-btn {
+  transition: transform 0.3s $ease-spring, box-shadow 0.3s ease;
+}
+
+// ── Gradient text utility ────────────────────────────────────
+.gradient-text { @include gradient-text; }
+
+// ── Form row ─────────────────────────────────────────────────
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @include below(md) { grid-template-columns: 1fr; }
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: $weight-semi;
+    color: $text-dark;
+    margin-bottom: 0.4rem;
+  }
+}
